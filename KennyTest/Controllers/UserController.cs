@@ -15,7 +15,7 @@ namespace KennyTest.Controllers
     {
         private readonly IUserService _userService;
 
-        UserController(IUserService usersService)
+        public UserController(IUserService usersService)
         {
             _userService = usersService;
         }
