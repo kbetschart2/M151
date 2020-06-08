@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KennyTest.Models;
+using KennyTest.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -9,6 +12,7 @@ namespace KennyTest.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -17,10 +21,12 @@ namespace KennyTest.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IUserService _userService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IUserService userService)
         {
             _logger = logger;
+            _userService = userService;     //Dependeny injection 
         }
 
         [HttpGet]
@@ -34,6 +40,12 @@ namespace KennyTest.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpGet("users")]
+        public IEnumerable<User> GetUsers()
+        {
+            return _userService.GetAll();
         }
     }
 }
