@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data;
+using Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using KennyTest.Models;
 
 namespace KennyTest.Controllers
 {
@@ -13,9 +14,9 @@ namespace KennyTest.Controllers
     [ApiController]
     public class TodoItemsController : ControllerBase
     {
-        private readonly KennyTestContext _context;
+        private readonly DemoContext _context;
 
-        public TodoItemsController(KennyTestContext context)
+        public TodoItemsController(DemoContext context)
         {
             _context = context;
         }
@@ -103,7 +104,7 @@ namespace KennyTest.Controllers
 
         private bool TodoItemExists(long id)
         {
-            return _context.TodoItem.Any(e => e.Id == id);
+            return _context.TodoItem.Any(e => e.Id == (Guid)id);
         }
     }
 }

@@ -18,6 +18,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Data;
 
 namespace KennyTest
 {
@@ -33,7 +34,7 @@ namespace KennyTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<KennyTestContext>(opt =>
+            services.AddDbContext<DemoContext>(opt =>
                opt.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddControllers();
 

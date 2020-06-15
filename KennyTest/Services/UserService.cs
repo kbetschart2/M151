@@ -1,4 +1,5 @@
 ﻿
+using Data.Models;
 using KennyTest.Models;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -23,7 +24,7 @@ namespace KennyTest.Services
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
         private List<User> _users = new List<User>
         {
-            new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
+            //new User { Id = 1, Name = "Test", Password = "test" }
         };
 
         //private readonly AppSettings _appSettings;
@@ -33,9 +34,9 @@ namespace KennyTest.Services
             //_appSettings = appSettings.Value;
         }
 
-        public User Authenticate(string username, string password)
+        public User Authenticate(string name, string password)
         {
-            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
+            var user = _users.SingleOrDefault(x => x.Name == name && x.Password == password);
 
             // return null if user not found
             if (user == null)
@@ -54,7 +55,7 @@ namespace KennyTest.Services
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);
+            //user.Token = tokenHandler.WriteToken(token);
 
             return user;
         }
